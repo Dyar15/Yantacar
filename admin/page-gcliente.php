@@ -1,16 +1,25 @@
-<?php include("includes/header.php") ?>
+<?php
+ 
+    require_once 'config/config.php';
+    require_once 'config/clase_sql.php';
 
+    # Objeto para heredar | La variable $clase_cli hereda todo de la Clase_sql
+    $clase_gcli = new Clase_sql();
 
-    <main class="app-content">
+    $result_gcli = $clase_gcli-> ConsultaClienteGeneral();
+ 
+
+?>
+<?php include ("includes/header.php")?>
+<main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i> Gestion de clientes</h1>
-          <p></p>
+          <h1><i class="fa fa-th-list"></i> Gestionar Cliente</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active"><a href="#">Data Table</a></li>
+          <li class="breadcrumb-item">Vehiculos</li>
+          <li class="breadcrumb-item active"><a href="#">Gestionar Cliente</a></li>
         </ul>
       </div>
       <div class="row">
@@ -21,23 +30,35 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
                     <tr>
-                      <th>Nombre</th>
-                      <th>Sexo</th>
-                      <th>Telefono</th>
-                      <th>Tipo de cliente</th>
-                      <th>Direccion</th>
-                      <th>Valor alquiler</th>
+                      <th>Numero Cedula</th>
+                      <th>Tipo de Cliente</th>
+                      <th>Nombre de Cliente</th>
+                      <th>Apellido de Cliente</th>
+                      <th>Direccion de Cliente</th>
+                      <th>Telefono de cliente</th>
+                      <th>Opciones</th>
                     </tr>
                   </thead>
                   <tbody>
+                  <?php while($f = $result_gcli->fetch_assoc()){ ?>
                     <tr>
-                    <td>David Yar</td>
-                      <td>Masculino</td>
-                      <td>0988676489</td>
-                      <td>Natural</td>
-                      <td>Brisas del colorado</td>
-                      <td>$320,800</td>
+                        <td> <?php echo $f['CED_CLI']; ?> </td>
+                        <td> <?php echo $f['COD_TCLI']; ?> </td>
+                        <td> <?php echo $f['NOM_CLI']; ?> </td>
+                        <td> <?php echo $f['APE_CLI']; ?> </td>
+                        <td> <?php echo $f['DIR_CLI']; ?> </td>
+                        <td> <?php echo $f['TELF_CLIF']; ?> </td>
+                        <td>
+                            <a href="editcliente.php?CED_CLI=<?php echo $f['CED_CLI']?>" class="btn btn-success">
+                            <i class="fa fa-pencil-square-o"></i>   
+                            </a>
+                            <a href="funciones/deletecliente.php?CED_CLI=<?php echo $f['CED_CLI']?>" class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                            </a>
+                        </td>                    
                     </tr>
+                    
+                    <?php }?>
                   </tbody>
                 </table>
               </div>
@@ -47,6 +68,4 @@
       </div>
     </main>
     
-
-<?php include("includes/footer.php") ?>
-
+<?php include ("includes/footer.php")?>

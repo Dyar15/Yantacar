@@ -1,13 +1,26 @@
-<?php include ("includes/header.php")?>
+<?php
+
+    require_once 'config/config.php';
+    require_once 'config/clase_sql.php';
+
+    # Objeto para heredar | La variable $clase_cli hereda todo de la Clase_sql
+    $clase_cli = new Clase_sql();
+    $result_cli = $clase_cli-> ConsulTipoCliente();
+?>
+<?php 
+include ("includes/header.php")
+?>
+
 <main class="app-content">
+
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-edit"></i> Crear Clientes</h1>
+          <h1><i class="fa fa-edit"></i> Crear CLiente</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item">Vehiculo</li>
-          <li class="breadcrumb-item"><a href="#">Crear Cliente</a></li>
+          <li class="breadcrumb-item"><a href="#">Crear cliente</a></li>
         </ul>
       </div>
       <div class="row justify-content-center">
@@ -15,75 +28,53 @@
           <div class="tile">
             <div class="row">
               <div class="col-lg-12">
-                <form action="funciones/inservehiculo.php" method="POST" enctype="multipart/form-data">
+                <form action="funciones/insertcliente.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                     <div class="form-group">
-                    </div>
-								<div class="register-top-grid">
-										<h3>INFORMACION PERSONAL</h3>
-                    </div>
-                    <div>
-                    <div class="form-group">
-                      <label>Numero de identificacion</label>
-                      <input class="form-control" type="text" placeholder="Ingresar numero de identificacion" >
-                    </div>
-										<div>
-                    <div class="form-group">
-                    <div class="form-group">
-                      <label>Nombres</label>
-                      <input class="form-control" type="text" placeholder="Ingresar nombres">
-                    </div>
-                    <div class="form-group">
-                      <label>Apellidos</label>
-                      <input class="form-control" type="text" placeholder="Ingresar apellidos">
-                    </div>    
-										<div>
-                    <div class="form-group">
-                    <label for="exampleInputEmail1">Direccion de correo electronico</label>
-                    <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Ingrese correo electronico"><small class="form-text text-muted" id="emailHelp"></small>
-                  </div>
-                    </div>
-                    </div>
-                    <div class="form-group">
-                    <label for="exampleSelect1">Tipo de cliente</label>
-                    <select class="form-control" id="exampleSelect1">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                        <label class="col-form-label" for="nummident">Numero de identificacion</label>
+                        <input class="form-control" type="text" name="nummident" id="nummatricula" placeholder="Ingresar numero de identificacion" required>
+                                <div class="invalid-feedback">Campo vacío Ingrese numero de identificacion</div>
+
+                   </div>
+                   <div class="form-group">
+                    <label for="Tcliente">Tipo de cliente</label>
+                    <select class="form-control" name="Tcliente">
+                    <?php while($fic = $result_cli->fetch_assoc()){?>
+                        <option value="<?php echo $fic['COD_TCLI']?>"><?php echo $fic['NOM_CLI']?></option>
+                    <?php } ?>
+                                                    
                     </select>
                   </div>
-                  <div>
                   <div class="form-group">
-                      <label>Numero de telefono</label>
-                      <input class="form-control" type="text" placeholder="Ingresar Numero de telefono" >
-                    </div>
-                    <div>
-                  <div class="form-group  ">
-                      <label>Direccion domiciliaria</label>
-                      <input class="form-control" type="text" placeholder="Ingresar direccion" >
-                    </div>
-
-									
-								
-						</form>
-					</div>
-		   </div>
-	  </div>
+                        <label class="col-form-label" for="Inombres">Nombres</label>
+                        <input class="form-control" type="text" name="Inombres" id="kvehiculo" placeholder="Ingresar Nombres" required>
+                                <div class="invalid-feedback">Campo vacío Ingrese nombres</div>
+                   </div>
+                   <div class="form-group">
+                        <label class="col-form-label" for="Iapellidos">Apellidos</label>
+                        <input class="form-control" type="text" name="Iapellidos" id="cvehiculo" placeholder="Ingresar Apellidos" required>
+                                <div class="invalid-feedback">Campo vacío Ingrese Apellidos</div>
+                   </div>
+                   <div class="form-group">
+                        <label class="col-form-label" for="Idireccion">Direccion</label>
+                        <input class="form-control" type="text" name="Idireccion" id="cvehiculo" placeholder="Ingresar Direccion" required>
+                                <div class="invalid-feedback">Campo vacío Ingrese Direccion</div>
+                   </div>
+                   <div class="form-group">
+                        <label class="col-form-label" for="Numtelef">Numero de Telefono</label>
+                        <input class="form-control" type="text" name="Numtelef" id="cvehiculo" placeholder="Ingresar Numero de Telefono" required>
+                                <div class="invalid-feedback">Campo vacío Ingrese Telefono</div>
+                   </div>
+                    
                     <div class="tile-footer">
-                    <button class="btn btn-primary" type="submit-all"  id="">Crear</button>
-                    <button class="btn btn-secundary" type="submit-all"  id="">Cancelar</button>
+                    <button class="btn btn-primary" type="submit-all"  id="">Enviar</button>
                     </div>
-                </form>
+              </form>
               </div>
             </div>
-            
 
           </div>
         </div>
       </div>
     </main>
-
-    
 
 <?php include ("includes/footer.php")?>

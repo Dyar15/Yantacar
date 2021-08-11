@@ -45,6 +45,39 @@
             $resultado = $this->bd->query("SELECT NOM_MOD FROM model_v");
             return $resultado;
      }
-
+     public function ConsulTipoCliente(){
+        # Consultas Sql
+        # query "es la consulta" ("consulta sql")
+        $resultado = $this->bd->query("SELECT * FROM tipo_cliente");
+        return $resultado;
     }
+ public function ConsultaClienteGeneral(){
+    # Consultas Sql
+    # query "es la consulta" ("consulta sql")
+    $resultado = $this->bd->query("SELECT * FROM clientes");
+    return $resultado;
+}
+# Funcion para Insertar Cliente
+public function InsertarCliente($nummident,$Tcliente,$Inombres,$Iapellidos,$Idireccion,$Numtelef){
+    $resultado = $this->bd->query("INSERT INTO  clientes ( CED_CLI, COD_TCLI, NOM_CLI, APE_CLI, DIR_CLI,TELF_CLIF) VALUES ('$nummident','$Tcliente','$Inombres','$Iapellidos','$Idireccion','$Numtelef')");
+    return true;
+    }
+# Funcion para eliminar Cliente
+public function EliminarCliente($id){
+    $resultado = $this->bd->query("DELETE FROM clientes WHERE CED_CLI = '$id'");
+    return $resultado;
+}
+ # Funcion para Visualizar Cliente Unico
+ public function ConsultarClienteUnico($cod){
+    $resultado = $this->bd->query("SELECT * FROM clientes WHERE CED_CLI = '$cod'");
+    return $resultado;
+}
+
+# Funcion para Actualizar Cliente
+public function ActualizarCliente($cod,$nummident,$Tcliente,$Inombres,$Iapellidos,$Idireccion,$Numtelef){
+    $resultado = $this->bd->query("UPDATE clientes set CED_CLI= '$nummident', COD_TCLI='$Tcliente' , NOM_CLI='$Inombres',APE_CLI ='$Iapellidos' ,DIR_CLI ='$Idireccion' ,TELF_CLIF='$Numtelef'  WHERE CED_CLI = '$cod'");
+    return true;
+}
+    
+}
 ?>
